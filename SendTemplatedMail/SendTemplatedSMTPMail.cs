@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Activities;
-using Microsoft.Office.Interop.Outlook;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Net.Mail;
 using System.Data;
-using System.Net.Mime;
 using CDO;
 using ADODB;
 
-namespace SendTemplatedMail
+namespace UiPathTeam.SendTemplatedMail.Activities
 {
 	public class SendTemplatedSMTPMail : CodeActivity
 	{
@@ -48,9 +41,7 @@ namespace SendTemplatedMail
 		[RequiredArgument()]
 		[Category("Sender")]
 		public InArgument<string> Name { get; set; }
-
-
-
+		
 		[Category("Input")]
 		public InArgument<string> TemplatePath { get; set; }
 
@@ -79,7 +70,7 @@ namespace SendTemplatedMail
 			String TO, CC, BCC, SUBJECT, BODY;
 			if (TemplatePath.Get(context).Contains(".eml"))
 			{
-				CDO.Message emlMessage = ReadMessage(TemplatePath.Get(context).Contains(":\\") ? TemplatePath.Get(context) : System.IO.Directory.GetCurrentDirectory() + '\\' + TemplatePath.Get(context));
+				Message emlMessage = ReadMessage(TemplatePath.Get(context).Contains(":\\") ? TemplatePath.Get(context) : System.IO.Directory.GetCurrentDirectory() + '\\' + TemplatePath.Get(context));
 				TO = emlMessage.To;
 				CC = emlMessage.CC;
 				BCC = emlMessage.BCC;
@@ -92,7 +83,7 @@ namespace SendTemplatedMail
 			{
 				try
 				{
-					Application app = new Application();
+					Outlook.Application app = new Outlook.Application();
 					Outlook.MailItem template = app.CreateItemFromTemplate(TemplatePath.Get(context).Contains(":\\") ? TemplatePath.Get(context) : System.IO.Directory.GetCurrentDirectory() + '\\' + TemplatePath.Get(context)) as Outlook.MailItem;
 					TO = template.To;
 					CC = template.CC;
@@ -128,14 +119,16 @@ namespace SendTemplatedMail
 				EnableSsl = EnableSSL,
 				Host = Server.Get(context),
 				Credentials = new System.Net.NetworkCredential(Email.Get(context), Password.Get(context)),
-				Timeout = 10000
+				Timeout = 30000
 			};
 			client.Send(mail);
 		}
-		protected CDO.Message ReadMessage(String emlFileName)
+
+
+		protected Message ReadMessage(String emlFileName)
 		{
-			CDO.Message msg = new CDO.MessageClass();
-			ADODB.Stream stream = new ADODB.StreamClass();
+			Message msg = new Message();
+			Stream stream = new Stream();
 			stream.Open(Type.Missing,
 						   ADODB.ConnectModeEnum.adModeUnknown,
 						   ADODB.StreamOpenOptionsEnum.adOpenStreamUnspecified,

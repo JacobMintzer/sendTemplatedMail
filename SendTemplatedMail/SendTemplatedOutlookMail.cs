@@ -1,34 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Activities;
 using Microsoft.Office.Interop.Outlook;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.IO;
 using System.Data;
-using System.Net.Mail;
-using System.Threading;
-using System.Diagnostics;
 
-namespace SendTemplatedMail
+namespace UiPathTeam.SendTemplatedMail.Activities
 {
     public class SendTemplatedOutlookMail : CodeActivity
     {
-		//[RequiredArgument()]
+		[RequiredArgument()]
 		[Category("Input")]
 		public InArgument<string> TemplatePath { get; set; }
 
-		[Category("Reciever")]
+		[Category("Receiver")]
 		public InArgument<string> To { get; set; }
 
-		[Category("Reciever")]
+		[Category("Receiver")]
 		public InArgument<string> Cc { get; set; }
 
-		[Category("Reciever")]
+		[Category("Receiver")]
 		public InArgument<string> Bcc { get; set; }
 		
 		[Category("Email")]
@@ -40,19 +32,13 @@ namespace SendTemplatedMail
 		[Category("Email")]
 		public InArgument<string> Body { get; set; }
 		
-		/*
-		[Category("Output")]
-		public OutArgument<MailItem> MailObject { get; set; }
-		*/
+		
 		
 		protected override void Execute(CodeActivityContext context)
 		{
 			Application app = new Application();
 
 			app.ActiveWindow();
-			//app = new Outlook.Application();
-			//Outlook.Folder folder = app.Session.GetDefaultFolder(
-			//Outlook.OlDefaultFolders.olFolderDrafts) as Outlook.Folder;
 			Outlook.MailItem mail;
 			if (!(TemplatePath.Get(context).Contains(".oft") || TemplatePath.Get(context).Contains(".msg"))){
 				throw new System.Exception("Invalid template format, please use a '.oft' or '.msg' template.");
@@ -67,17 +53,9 @@ namespace SendTemplatedMail
 			{
 				throw new System.Exception("Error, there is no recepients specified");
 			}
-			//app.CreateItemFromTemplate()
-
-			//mail.SaveAs(@"C:\Users\UiPath Inc\Documents\mail.msg");
-
+			
 			mail.HTMLBody = mail.HTMLBody.Replace("{message}", Body.Get(context));
 			mail.HTMLBody = mail.HTMLBody.Replace("{table}", DT.Get(context)!=null?(DT.Get(context).Rows.Count>0?GetHTMLTable(DT.Get(context)):""):"");
-			
-			//mail.Display(false);
-			//MailObject.Set(context, mail);
-			//mail.GetInspector.Display(false);
-			//mail.GetInspector.Activate();
 			mail.Send();
 			app.GetNamespace("MAPI").SendAndReceive(true);
 			
