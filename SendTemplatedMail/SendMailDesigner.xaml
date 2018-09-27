@@ -1,0 +1,85 @@
+﻿<sap:ActivityDesigner x:Class="UiPathTeam.SendTemplatedMail.Activities.SendMailDesigner"
+                      
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:sap="clr-namespace:System.Activities.Presentation;assembly=System.Activities.Presentation"
+    xmlns:sapc="clr-namespace:System.Activities.Presentation.Converters;assembly=System.Activities.Presentation"
+    xmlns:sapv="clr-namespace:System.Activities.Presentation.View;assembly=System.Activities.Presentation"
+    xmlns:sd="clr-namespace:System.Data;assembly=System.Data">
+    <sap:ActivityDesigner.Resources>
+        <ResourceDictionary>
+            <sapc:ArgumentToExpressionConverter x:Key="ArgumentToExpressionConverter" />
+        </ResourceDictionary>
+    </sap:ActivityDesigner.Resources>
+    <DockPanel Width="300">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="210"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="To"></TextBlock>
+            <sapv:ExpressionTextBox Grid.Row="0" Grid.Column="1"  OwnerActivity="{Binding Path=ModelItem}" ExpressionType="s:String" HintText="Recipient e-mail address (overwrites template)" Expression="{Binding Path=ModelItem.To, Converter={StaticResource ArgumentToExpressionConverter},ConverterParameter=In, Mode=TwoWay}" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Subject"></TextBlock>
+            <sapv:ExpressionTextBox Grid.Row="1" Grid.Column="1"  OwnerActivity="{Binding Path=ModelItem}" ExpressionType="s:String" HintText="Subject for e-mail (overwrites template)" Expression="{Binding Path=ModelItem.Subject, Converter={StaticResource ArgumentToExpressionConverter},ConverterParameter=In, Mode=TwoWay}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Body"></TextBlock>
+            <sapv:ExpressionTextBox Grid.Row="2" Grid.Column="1"  OwnerActivity="{Binding Path=ModelItem}" ExpressionType="s:String" HintText="Text to insert into e-mail" Expression="{Binding Path=ModelItem.Body, Converter={StaticResource ArgumentToExpressionConverter},ConverterParameter=In, Mode=TwoWay}" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Datatable"></TextBlock>
+            <sapv:ExpressionTextBox Grid.Row="3" Grid.Column="1"  OwnerActivity="{Binding Path=ModelItem}" ExpressionType="sd:DataTable" HintText="Datatable to embed into e-mail" Expression="{Binding Path=ModelItem.Subject, Converter={StaticResource ArgumentToExpressionConverter},ConverterParameter=In, Mode=TwoWay}" />
+
+        </Grid>
+        
+
+    </DockPanel>
+
+
+
+    <sap:ActivityDesigner.Icon>
+
+        <DrawingBrush  Stretch="Uniform" Viewbox="0,0,49.937,23.189" ViewboxUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,16.516,0" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FF6793CC" Geometry="M2.7739979,20.413007 L2.7699979,2.7669806 30.647006,2.7729806 30.651006,20.419007 z M33.417007,2.5369802 C33.417007,1.1869782 32.236007,0.0059763762 30.884006,0.0049763747 L2.5299978,-2.3632848E-05 C1.1349974,-0.0010236344 0.00099702178,1.1339781 -2.9785165E-06,2.5299802 L0.0029970224,20.649008 C0.0039970227,21.326009 0.2679971,21.96201 0.74699725,22.44001 1.2249974,22.919011 1.8609976,23.183012 2.5369978,23.183012 L30.891006,23.189012 C32.287007,23.189012 33.421007,22.05501 33.421007,20.657008 z" />
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,21.992,5.359" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FF6793CC" Geometry="M0.74279398,1.8546367 L0.732794,1.862637 0.74279398,1.8536366 z M20.359752,0.30457346 L11.125772,7.4748659 2.1097911,0.28657272 C1.8397917,0.069563873 1.4997924,-0.029440166 1.1537931,0.0075613436 0.80979384,0.047562975 0.4997945,0.21756991 0.28479495,0.48858096 -0.12920417,1.004602 -0.087204258,1.7476323 0.38079475,2.2146514 L10.306774,10.142975 C10.535773,10.323982 10.822773,10.423986 11.115772,10.426986 11.407771,10.425986 11.691771,10.326982 11.91077,10.151975 L21.953749,2.3576572 C22.226748,2.1456486 22.401748,1.837636 22.444748,1.494622 22.487748,1.1496079 22.394748,0.80759398 22.180749,0.5335828 21.735749,-0.039440574 20.918751,-0.1284442 20.359752,0.30457346" />
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,0,1.03" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FF6793CC" Geometry="M14.889001,1.0010015 C14.888001,0.44901447 14.442001,0.0020249525 13.890001,0.0020249525 L0.99800789,2.4999414E-05 C0.44700817,-0.00097497713 8.3984332E-06,0.44501456 8.3984332E-06,0.99800159 8.3984332E-06,1.2729951 0.11300834,1.5229893 0.29300825,1.702985 0.47300816,1.8839808 0.72300803,1.9959782 0.99800789,1.9949782 L13.891001,1.9979781 C14.442001,1.9979781 14.888001,1.5519886 14.889001,1.0010015" />
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,5.126,7.02" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FF6793CC" Geometry="M9.7630008,1.0000048 C9.7630008,0.44901769 9.3170009,0.0020281751 8.7650009,0.0030281516 L0.99700127,2.8221994E-05 C0.4480013,2.8221994E-05 0.0010013183,0.44601776 1.3183593E-06,0.99800481 0.0010013183,1.2729984 0.11300131,1.5229925 0.2920013,1.7039882 0.47300129,1.884984 0.72200128,1.9959814 0.99800127,1.9969814 L8.7660009,1.9979813 C9.3180009,1.9989813 9.7640008,1.5529918 9.7630008,1.0000048" />
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,8.799,13.009" />
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FF6793CC" Geometry="M5.0940055,9.3749564E-06 L0.997992,9.3749564E-06 C0.44599019,0.0010093703 -0.0010112826,0.4470073 -1.1279334E-05,0.99800474 -1.1279334E-05,1.2740035 0.11198909,1.5230023 0.29298968,1.7040015 0.47299028,1.8850006 0.7229911,1.9970001 0.997992,1.9970001 L5.0950055,1.9970001 C5.6460073,1.9970001 6.0920087,1.5510022 6.0920087,0.99900473 6.0920087,0.44800729 5.6460073,0.0010093703 5.0940055,9.3749564E-06" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </sap:ActivityDesigner.Icon>
+
+
+</sap:ActivityDesigner>
