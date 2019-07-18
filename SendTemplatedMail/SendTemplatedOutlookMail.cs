@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Activities;
+using System.Collections.Generic;
 using Microsoft.Office.Interop.Outlook;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using System.ComponentModel;
@@ -32,7 +33,7 @@ namespace UiPathTeam.SendTemplatedMail.Activities
 		[Category("Email")]
 		public InArgument<string> Body { get; set; }
 		
-		
+		public InArgument<Dictionary<string,string>> Attachments { get; set; }
 		
 		protected override void Execute(CodeActivityContext context)
 		{
