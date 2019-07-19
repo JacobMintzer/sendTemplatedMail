@@ -36,29 +36,29 @@ namespace UiPathTeam.SendTemplatedMail.Activities
 		[Category("Email")]
 		public InArgument<string> Body { get; set; }
 		
-		public List<InArgument<string>> Attachments { get; set; }
+		public InArgument<string[]> Attachments { get; set; }
 
 		public SendTemplatedOutlookMail()
 		{
-			Attachments = new List<InArgument<string>>() { new InArgument<string>() };
+			//Attachments = new List<InArgument<string>>() { new InArgument<string>() };
 		}
 		protected override void CacheMetadata(CodeActivityMetadata metadata)
 		{
 			base.CacheMetadata(metadata);
-			int index = 1;
+			/*int index = 1;
 			foreach (var item in Attachments)
 			{
 				string name = "attachmentArg" + ++index;
 				var runtimeArg = new RuntimeArgument(name, typeof(string), ArgumentDirection.In);
 				metadata.Bind(item, runtimeArg);
 				metadata.AddArgument(runtimeArg);
-			}
+			}*/
 		}
 
 		protected override async Task<Action<AsyncCodeActivityContext>> ExecuteAsync(AsyncCodeActivityContext context, CancellationToken cancellationToken, Application client)
 		{
 
-			List<string> inputs = Attachments.Select(x => x.Get(context)).ToList();
+			List<string> inputs = Attachments.Get(context).ToList();
 			if (!(TemplatePath.Get(context).Contains(".oft") || TemplatePath.Get(context).Contains(".msg")))
 			{
 				throw new System.Exception("Invalid template format, please use a '.oft' or '.msg' template.");

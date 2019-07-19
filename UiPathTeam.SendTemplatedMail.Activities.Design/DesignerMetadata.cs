@@ -17,8 +17,8 @@ namespace UiPathTeam.SendTemplatedMail.Activities.Design
             var categoryAttribute =  new CategoryAttribute($"{Resources.Category}");
             builder.AddCustomAttributes(typeof(SendTemplatedSMTPMail), categoryAttribute);
             builder.AddCustomAttributes(typeof(SendTemplatedSMTPMail), new DesignerAttribute(typeof(SendMailDesigner)));
-			builder.AddCustomAttributes(typeof(SendTemplatedSMTPMail), nameof(SendTemplatedSMTPMail.Attachments), new EditorAttribute(typeof(ArgumentCollectionEditor), typeof(DialogPropertyValueEditor)));
-			builder.AddCustomAttributes(typeof(SendTemplatedOutlookMail), nameof(SendTemplatedOutlookMail.Attachments), new EditorAttribute(typeof(ArgumentCollectionEditor), typeof(DialogPropertyValueEditor)));
+			//builder.AddCustomAttributes(typeof(SendTemplatedSMTPMail), nameof(SendTemplatedSMTPMail.Attachments), new EditorAttribute(typeof(ArgumentCollectionEditor), typeof(DialogPropertyValueEditor)));
+			//builder.AddCustomAttributes(typeof(SendTemplatedOutlookMail), nameof(SendTemplatedOutlookMail.Attachments), new EditorAttribute(typeof(ArgumentCollectionEditor), typeof(DialogPropertyValueEditor)));
 			builder.AddCustomAttributes(typeof(SendTemplatedOutlookMail), categoryAttribute);
             builder.AddCustomAttributes(typeof(SendTemplatedOutlookMail), new DesignerAttribute(typeof(SendMailDesigner)));
             builder.AddCustomAttributes(typeof(SendTemplatedOutlookMail), new HelpKeywordAttribute("https://go.uipath.com"));

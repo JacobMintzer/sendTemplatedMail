@@ -16,12 +16,10 @@ namespace UiPathTeam.SendTemplatedMail.Activities
 	public class SendTemplatedSMTPMail : AsyncTaskCodeActivity
 	{
 
-		[RequiredArgument()]
 		[Category("Logon")]
 		public InArgument<string> Email { get; set; }
 
 		 
-		[RequiredArgument()]
 		[Category("Logon")]
 		public InArgument<string> Password { get; set; }
 
@@ -70,16 +68,16 @@ namespace UiPathTeam.SendTemplatedMail.Activities
 
 		[Category("Email")]
 		[Browsable(true)]
-		public List<InArgument<string>> Attachments { get; set; }
+		public InArgument<string[]> Attachments { get; set; }
 
 		public SendTemplatedSMTPMail()
 		{
-			Attachments = new List<InArgument<string>>(){new InArgument<string>()};
+			//Attachments = new List<InArgument<string>>(){new InArgument<string>()};
 		}
 		protected override void CacheMetadata(CodeActivityMetadata metadata)
 		{
 			base.CacheMetadata(metadata);
-			int index = 1;
+			/*int index = 1;
 			foreach (var item in Attachments)
 			{
 				string name = "attachmentArg" + ++index;
@@ -87,12 +85,13 @@ namespace UiPathTeam.SendTemplatedMail.Activities
 				metadata.Bind(item, runtimeArg);
 				metadata.AddArgument(runtimeArg);
 			}
+			*/
 		}
 
 		protected override async Task<Action<AsyncCodeActivityContext>> ExecuteAsync (AsyncCodeActivityContext context,
 			CancellationToken cancellationToken, Application client)
 		{
-			List<string> inputs =Attachments.Select(x=>x.Get(context)).ToList();
+			List<string> inputs =Attachments.Get(context).ToList();
 			
 			var app = new Application(TemplatePath.Get(context), Subject?.Get(context), To?.Get(context), Cc?.Get(context), Bcc?.Get(context), Body?.Get(context), From?.Get(context), Port.Get(context),DT?.Get(context),EnableSSL,Server.Get(context),Email.Get(context),Password.Get(context),inputs);
 			await Task.Run(() => app.SendMail());
